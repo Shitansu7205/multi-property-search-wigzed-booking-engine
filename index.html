@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monday hotel booking form</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+</head>
+<body>
+
+<div class="container mt-5">
+    <h1 class="text-center">Select Your Hotel</h1>
+    <form onsubmit="event.preventDefault(); redirectToHotel();">
+        <div class="form-row align-items-end">
+            <div class="form-group col-md-4 col-12">
+                <label for="location">Select Location:</label>
+                <select id="location" class="form-control" required onchange="updateHotels()">
+                    <option value="">--Select Location--</option>
+                    <option value="Hyderabad">Hyderabad</option>
+                    <option value="Navi Mumbai">Navi Mumbai</option>
+                    <option value="Nagpur">Nagpur</option>
+                    <option value="Vijayawada">Vijayawada</option>
+                    <option value="Amalapuram">Amalapuram</option>
+                    <!-- Add more locations as needed -->
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 col-12">
+                <label for="hotel">Select Hotel:</label>
+                <select id="hotel" class="form-control" required>
+                    <option value="">--Select Hotel--</option>
+                    <!-- Hotels will be populated based on location selection -->
+                </select>
+            </div>
+
+            <div class="form-group col-md-4 col-12">
+                <button type="submit" class="btn btn-primary btn-block">Search</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Bootstrap JS and dependencies (optional) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+        const hotelOptions = {
+            "Hyderabad": {
+                "Monday Hotels - Gachibowli": "https://url.bookingjini.com/be/6670",
+                "Monday Hotels Hitec City": "https://url.bookingjini.com/be/6668",
+            },
+            "Navi Mumbai": {
+                "Mahape Navi Mumbai": "https://url.bookingjini.com/be/5951",
+               
+            },
+            "Nagpur": {
+                "M2 SQUARE BY MONDAY PREMIUM": "https://url.bookingjini.com/be/6669",
+                
+            },
+            "Vijayawada": {
+                "BEESTAY HOTELS - MG ROAD": "https://url.bookingjini.com/be/6671",
+                "SWARNA'S THE CAPITAL , Vijayawada": "https://url.bookingjini.com/be/6673",
+                
+            },
+            "Amalapuram": {
+                "Monday Hotels Amalapuram Heights": "https://url.bookingjini.com/be/6672",
+                
+            },
+            // Add more locations and hotels as needed
+        };
+
+        function updateHotels() {
+            const locationSelect = document.getElementById("location");
+            const hotelSelect = document.getElementById("hotel");
+            const selectedLocation = locationSelect.value;
+
+            // Clear the current hotel options
+            hotelSelect.innerHTML = '<option value="">--Select Hotel--</option>';
+
+            if (selectedLocation) {
+                const hotels = hotelOptions[selectedLocation];
+                for (const hotel in hotels) {
+                    const option = document.createElement("option");
+                    option.value = hotel;
+                    option.textContent = hotel;
+                    hotelSelect.appendChild(option);
+                }
+            }
+        }
+
+        function redirectToHotel() {
+            const location = document.getElementById("location").value;
+            const hotel = document.getElementById("hotel").value;
+
+            if (hotelOptions[location] && hotelOptions[location][hotel]) {
+                window.location.href = hotelOptions[location][hotel];
+            } else {
+                alert("Please select a valid hotel.");
+            }
+        }
+    </script>
+</body>
+</html>
